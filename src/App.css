@@ -1,0 +1,107 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.title {
+  color: DodgerBlue;
+  font-size: xxx-large;
+  font-family: sans-serif;
+
+
+}
+
+.board {
+  width: 300px;
+  height: 300px;
+  /* border: solid 1px #000000; */
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.cell {
+  display: flex;
+  width: 100px;
+  height: 100px;
+  border: solid 1px #000000;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  font-size: xx-large;
+  border-radius: 5px;
+}
+
+.cell:hover {
+  background-color: rgba(192, 212, 212, 0.712);
+}
+
+.points {
+  flex-direction: column;
+  text-align: right;
+
+}
+
+table,
+th,
+td {
+  border: 1px solid black;
+  width: 50%;
+  text-align: center;
+  margin-left: 120%;
+  margin-top: -65%;
+}
+
+#table_title {
+  width: 100%;
+  display: contents;
+}
+
+.reset {
+  background-color: darkgrey;
+}
+
+.win {
+  /* background-color: rgb(124, 219, 124); */
+  height: 30px;
+  font-size: x-large;
+
+}
+
+@keyframes fireworksAnimation {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(-300px) rotate(360deg);
+  }
+}
+
+.firework {
+  position: absolute;
+  width: 12%;
+  height: 12%;
+  background-color: rgb(200, 200, 30);
+  /* Change the color of the fireworks if needed */
+  border-radius: 50%;
+  animation: fireworksAnimation 1s linear infinite;
+}
+
+
+
+
+
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+  }
+}
