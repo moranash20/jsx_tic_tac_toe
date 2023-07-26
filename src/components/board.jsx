@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import Cell from "./cell";
 import Win from "./win"
 
@@ -8,8 +8,8 @@ export default function Board() {
     const [cells, setCells] = useState([[null, null, null], [null, null, null], [null, null, null]]);
     const [currentPlayer, setCurrentPlayer] = useState('X');
     const [isWin, setIsWin] = useState(false);
-    // const [winner, setWinner] = useState('');
-    const [isDrawe, setIsDrawe] = useState(false);
+    const [winner, setWinner] = useState('');
+    const [isDraw, setIsDraw] = useState(false);
     const [countX, setCountX] = useState(0);
     const [countO, setCountO] = useState(0);
     const [showFireworks, setShowFireworks] = useState(false);
@@ -42,107 +42,102 @@ export default function Board() {
         // { winCombo8: cells[0][2] && cells[1][1] && cells[2][0] },
     }
 
-    // const checkWinner = (newCells) => {
-    //     // Check rows for a winner
-    //     for (let row = 0; row < 3; row++) {
-    //         if (
-    //             newCells[row][0] &&
-    //             newCells[row][0] === newCells[row][1] &&
-    //             newCells[row][1] === newCells[row][2]
-    //         ) {
-    //             return newCells[row][0]
-    //             // setWinner(player => player);
-    //             // return;
-    //         }
-    //     }
+    const checkWinner = (newCells) => {
+        // Check rows for a winner
+        for (let row = 0; row < 3; row++) {
+            if (
+                newCells[row][0] &&
+                newCells[row][0] === newCells[row][1] &&
+                newCells[row][1] === newCells[row][2]
+            ) {
+                setIsWin(true);
+                return newCells[row][0]
+                // setWinner(player => player);
+                // return;
+            }
+        }
 
-    //     // Check columns for a winner
-    //     for (let col = 0; col < 3; col++) {
-    //         if (
-    //             newCells[0][col] &&
-    //             newCells[0][col] === newCells[1][col] &&
-    //             newCells[1][col] === newCells[2][col]
-    //         ) {
-    //             // setWinner(newCells[0][col]);
-    //             return newCells[0][col];
-    //         }
-    //     }
+        // Check columns for a winner
+        for (let col = 0; col < 3; col++) {
+            if (
+                newCells[0][col] &&
+                newCells[0][col] === newCells[1][col] &&
+                newCells[1][col] === newCells[2][col]
+            ) {
+                // setWinner(newCells[0][col]);
+                setIsWin(true);
+                return newCells[0][col];
+            }
+        }
 
-    //     // Check diagonals for a winner
-    //     if (
-    //         newCells[0][0] &&
-    //         newCells[0][0] === newCells[1][1] &&
-    //         newCells[1][1] === newCells[2][2]
-    //     ) {
-    //         // setWinner(newCells[0][0]);
-    //         return newCells[0][0];
-    //     }
+        // Check diagonals for a winner
+        if (
+            newCells[0][0] &&
+            newCells[0][0] === newCells[1][1] &&
+            newCells[1][1] === newCells[2][2]
+        ) {
+            // setWinner(newCells[0][0]);
+            setIsWin(true);
+            return newCells[0][0];
+        }
 
-    //     if (
-    //         newCells[0][2] &&
-    //         newCells[0][2] === newCells[1][1] &&
-    //         newCells[1][1] === newCells[2][0]
-    //     ) {
-    //         setWinner(newCells[0][2]);
-    //         return newCells[0][2];
-    //     }
+        if (
+            newCells[0][2] &&
+            newCells[0][2] === newCells[1][1] &&
+            newCells[1][1] === newCells[2][0]
+        ) {
+            // setWinner(newCells[0][2]);
+            setIsWin(true);
+            return newCells[0][2];
+        }
+        // If no winner is found, check for a draw
+        checkDraw(newCells);
+    }
 
-    // }
+    const checkDraw = (newCells) => {
+        const isBoardFull = newCells.every(row => row.every(cell => cell !== null));
+        if (isBoardFull) {
+            setIsDraw(true);
+        }
+      };
 
     const handleClick = (event, row, column) => {
+        //if win- disable click on the board
         if (isWin) {
             return;
         }
 
         // if the cell is not selected already 
         if (cells[row][column] === null) {
-            // update the cells
-            const newCells = [...cells];
-            newCells[row][column] = currentPlayer
+            cells[row][column] = currentPlayer
 
-            setCells(newCells);
+            setCells(cells);
+            console.log(cells);
 
-            // setWinner(checkWinner(newCells))
-            // if (winner === 'X' || winner === 'O') {
-            //     setIsWin(true)
-            // }
-            `  `
-            Object.values(winCombos).forEach(value => {
-                if (value !== null) {
-                    setIsWin(prev => !prev);
-                    setShowFireworks(true);
-                    setTimeout(() => setShowFireworks(false), 5000);
-                    if (value === 'X') {
-                        setCountX(countX + 1);
-                    }
-                    else if (value === 'O') {
-                        setCountO(countO + 1);
-                    }
-                    else {
-                        setIsDrawe(true);
-                    }
-
-                }
-            });
+            let win = checkWinner(cells);
+            setWinner(win);
+            if (win === 'X') {
+                setCountX(countX + 1);
+            }
+            else if(win === 'O'){
+                setCountO(countO + 1);
+            }
 
             setCurrentPlayer(currentPlayer === 'X' ? 'O' : 'X');
         }
     }
-    useEffect(() => {
-        // Function to remove the fireworks after the animation duration
-        if (showFireworks) {
-            setTimeout(() => setShowFireworks(false), 1000);
-        }
-    }, [showFireworks]);
 
     const handleReset = () => {
         setCells([[null, null, null], [null, null, null], [null, null, null]]);
         setIsWin(false);
         setCurrentPlayer('X');
+        setWinner('');
+        setIsDraw(false)
     }
 
     return (
         <>
+        
             <div className="title">
                 <b>Tic Tac Toe</b>
             </div>
@@ -170,14 +165,9 @@ export default function Board() {
                     </table>
                 </div>
             </div>
-            <div className="win">
-                <b>{isWin && 'win'}</b>
-                {showFireworks && (
-                    <div>
-                        {/* Add multiple firework elements here to have multiple fireworks */}
-                        <div className="firework" style={{ top: "50%", left: "50%" }}></div>
-                    </div>
-                )}
+            <div className="win">            
+                <b> {winner } {winner && isWin && 'win '} </b>
+                <b className="draw">{isDraw && 'Draw'}</b>
             </div>
             <p></p>
             <button className="reset" onClick={handleReset}>Reset Board</button>
