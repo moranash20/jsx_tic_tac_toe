@@ -1,8 +1,8 @@
 import { useState} from "react";
 import Confetti from 'react-confetti';
-import ringer from '../winGame.mp3';
-import Cell from "./cell";
-import Win from "./win"
+import ringer from '../../assets/winGame.mp3';
+import Cell from "../Cell/cell";
+import Win from "../Win/Win"
 
 
 //create bord
