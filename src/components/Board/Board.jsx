@@ -1,24 +1,22 @@
 import { useState } from "react";
-import Confetti from "react-confetti";
+
 import ringer from "../../assets/winGame.mp3";
 import Cell from "../Cell/Cell";
 import Win from "../Win/Win";
+import Points from "../Points/Points";
+import { STATUSES } from "../../enums";
 
 //create board
-export default function Board() {
-  const [cells, setCells] = useState([
-    [null, null, null],
-    [null, null, null],
-    [null, null, null],
-  ]);
-  const [currentPlayer, setCurrentPlayer] = useState("X");
-  const [isWin, setIsWin] = useState(false);
-  const [winner, setWinner] = useState("");
-  const [isDraw, setIsDraw] = useState(false);
-  const [countX, setCountX] = useState(0);
-  const [countO, setCountO] = useState(0);
-
-  const audio = new Audio(ringer);
+export default function Board({ currentPlayer, onClick, gameStatus }) {
+  //   const [cells, setCells] = useState([
+  //     [null, null, null],
+  //     [null, null, null],
+  //     [null, null, null],
+  //   ]);
+  //   const [currentPlayer, setCurrentPlayer] = useState("X");
+  //   const [isWin, setIsWin] = useState(false);
+  //   const [prevPlayer, setPlayer] = useState(currentPlayer);
+  //   const audio = new Audio(ringer);
 
   const checkWinner = (newCells) => {
     // Check rows for a winner
@@ -28,7 +26,8 @@ export default function Board() {
         newCells[row][0] === newCells[row][1] &&
         newCells[row][1] === newCells[row][2]
       ) {
-        setIsWin(true);
+        isWin = true;
+        // setIsWin(true);
         return newCells[row][0];
       }
     }
@@ -40,7 +39,8 @@ export default function Board() {
         newCells[0][col] === newCells[1][col] &&
         newCells[1][col] === newCells[2][col]
       ) {
-        setIsWin(true);
+        isWin = true;
+        // setIsWin(true);
         return newCells[0][col];
       }
     }
@@ -51,7 +51,8 @@ export default function Board() {
       newCells[0][0] === newCells[1][1] &&
       newCells[1][1] === newCells[2][2]
     ) {
-      setIsWin(true);
+      isWin = true;
+      //   setIsWin(true);
       return newCells[0][0];
     }
 
@@ -60,7 +61,8 @@ export default function Board() {
       newCells[0][2] === newCells[1][1] &&
       newCells[1][1] === newCells[2][0]
     ) {
-      setIsWin(true);
+      isWin = true;
+      //   setIsWin(true);
       return newCells[0][2];
     }
 
@@ -78,32 +80,39 @@ export default function Board() {
   };
 
   const handleCellClick = (event, row, column) => {
-    //if win- disable click on the board
-    if (isWin) {
-      return;
-    }
+    if (gameStatus !== STATUSES["ACTIVE"]) return;
 
-    // if the cell is not selected already
-    if (cells[row][column] === null) {
-      cells[row][column] = currentPlayer;
+    if (typeof cells[row][column] === "string") return;
 
-      setCells(cells);
-      console.log(cells);
-
-      let win = checkWinner(cells);
-      setWinner(win);
-
-      if (win === "X") {
-        audio.play();
-        setCountX(countX + 1);
-      } else if (win === "O") {
-        audio.play();
-        setCountO(countO + 1);
-      }
-
-      setCurrentPlayer(currentPlayer === "X" ? "O" : "X");
-    }
+    setCells((previousState) => {
+      return [...previousState, (previousState[row][column] = currentPlayer)];
+    });
   };
+
+  // // if the cell is not selected already
+  // if (cells[row][column] === null) {
+  //   //   cells[row][column] = currentPlayer;
+
+  //   setCells((previousState) => {
+  //     return [...previousState, (previousState[row][column] = currentPlayer)];
+  //   });
+
+  //   let win = checkWinner(cells);
+  //   setWinner(win);
+
+  //   if (win === "X") {
+  //     audio.play();
+  //     setCountX(countX + 1);
+  //   } else if (win === "O") {
+  //     audio.play();
+  //     setCountO(countO + 1);
+  //   }
+  //   cells;
+  //   console.log(currentPlayer);
+  //   if (prevPlayer === currentPlayer) setPlayer(currentPlayer);
+  //   console.log("2");
+  //   console.log(prevPlayer);
+  //   console.log(currentPlayer);
 
   const handleResetClick = () => {
     setCells([
@@ -111,62 +120,32 @@ export default function Board() {
       [null, null, null],
       [null, null, null],
     ]);
-    setIsWin(false);
-    setCurrentPlayer("X");
+    isWin = false;
+    // setIsWin(false);
+    currentPlayer("X");
     setWinner("");
     setIsDraw(false);
   };
 
   return (
-    <>
-      <div className="title">
-        <b>Tic Tac Toe</b>
-      </div>
-      <h2 className="player">Player: {currentPlayer}</h2>
-      <div className="board">
-        {cells.map((row, rowIndex) => {
-          return (
-            <div className="row" key={rowIndex}>
-              {row.map((column, columnIndex) => {
-                return (
-                  <Cell
-                    row={rowIndex}
-                    column={columnIndex}
-                    value={column}
-                    key={columnIndex}
-                    onClick={handleCellClick}
-                  />
-                );
-              })}
-            </div>
-          );
-        })}
-        <div className="points">
-          <table>
-            <th id="table_title"> Points </th>
-            <tr className="table-head">
-              <th> X </th>
-              <th> O </th>
-            </tr>
-            <tr className="table-body">
-              <td>{countX}</td>
-              <td>{countO}</td>
-            </tr>
-          </table>
-        </div>
-      </div>
-      <div className="win">
-        <b>
-          {" "}
-          {winner} {isWin && "win"}
-          {isWin && <Confetti />}
-        </b>
-        <b className="draw">{isDraw && "Draw"}</b>
-      </div>
-      <p></p>
-      <button className="reset" onClick={handleResetClick}>
-        Reset Board
-      </button>
-    </>
+    <div className="board" onClick={onClick}>
+      {cells.map((row, rowIndex) => {
+        return (
+          <div className="row" key={rowIndex}>
+            {row.map((column, columnIndex) => {
+              return (
+                <Cell
+                  row={rowIndex}
+                  column={columnIndex}
+                  value={column}
+                  key={columnIndex}
+                  onClick={handleCellClick}
+                />
+              );
+            })}
+          </div>
+        );
+      })}
+    </div>
   );
 }

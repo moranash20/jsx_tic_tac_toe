@@ -1,0 +1,29 @@
+.points {
+    flex-direction: column;
+    text-align: right;
+  }
+  
+  table,
+  th,
+  td {
+    border: 2px solid black;
+    width: 50%;
+    text-align: center;
+    margin-left: 120%;
+    margin-top: -100%;
+    height: 50px;
+    border-radius: 5px;
+  }
+  
+  #table_title {
+    width: 100%;
+    display: contents;
+  }
+  
+  .table-head{
+    font-size: x-large;
+  }
+  
+  .table-body{
+    font-size: x-large;
+  }

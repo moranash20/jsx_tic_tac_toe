@@ -29,7 +29,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background-image: linear-gradient(to right, #6fc9d5, #da9ae2)
+  background-image: linear-gradient(to right bottom, #6fc9d5, #da9ae2)
 }
 
 h1 {
