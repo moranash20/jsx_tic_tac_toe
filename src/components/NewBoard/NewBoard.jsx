@@ -15,8 +15,8 @@ export default function NewBoard() {
             <Cell
               row={rowIndex}
               column={columnIndex}
-              value={column}
-              // key={columnIndex}
+              // value={column}
+              key={columnIndex}
               // onClick={handleCellClick}
             />
           ))}

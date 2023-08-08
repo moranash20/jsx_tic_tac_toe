@@ -1,8 +1,10 @@
 import { useContext } from "react";
 import { AppContext } from "../../contexts/AppContext";
+import { STATUSES } from "../../enums";
 
 export default function Cell({ row, column, value }) {
-  const { setCells, setCurrentPlayer } = useContext(AppContext);
+  const { cells, setCells, currentPlayer, setCurrentPlayer, gameStatus } =
+    useContext(AppContext);
 
   const handleClick = () => {
     if (gameStatus !== STATUSES["ACTIVE"]) return;
@@ -18,7 +20,7 @@ export default function Cell({ row, column, value }) {
 
   return (
     <div className="cell" onClick={handleClick}>
-      {value}
+      {cells[row][column]}
     </div>
   );
 }
