@@ -3,6 +3,8 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  display: grid;
+  grid-template-columns: 30rem;
 }
 
 .title {
@@ -12,84 +14,6 @@
   letter-spacing: 25px;
 
 }
-
-.board {
-  width: 300px;
-  height: 300px;
-  display: flex;
-  flex-direction: column;
-}
-
-.row {
-  display: flex;
-  flex-direction: row;
-}
-
-.cell {
-  display: flex;
-  width: 100px;
-  height: 100px;
-  border: solid 2px #000000;
-  box-sizing: border-box;
-  align-items: center;
-  justify-content: center;
-  font-size: xx-large;
-  border-radius: 5px;
-}
-
-.cell:hover {
-  background-color: rgba(192, 212, 212, 0.712);
-}
-
-.points {
-  flex-direction: column;
-  text-align: right;
-}
-
-table,
-th,
-td {
-  border: 2px solid black;
-  width: 50%;
-  text-align: center;
-  margin-left: 120%;
-  margin-top: -100%;
-  height: 50px;
-  border-radius: 5px;
-}
-
-#table_title {
-  width: 100%;
-  display: contents;
-}
-
-.table-head{
-  font-size: x-large;
-}
-
-.table-body{
-  font-size: x-large;
-}
-
-.reset {
-  background-color: rgb(212 221 220 / 87%);
-  border: groove;
-  margin-right: 225px;
-}
-
-/* .win {
-  height: 30px;
-  font-size: x-large;
-  color: #e7076d;;
-  padding-right: 225px;
-}
-
-.draw{
-  height: 30px;
-  font-size: x-large;
-  color: #69399d;;
-} */
-
 
 @media screen and (max-width: 600px) {
   .column {

@@ -1,0 +1,23 @@
+.status.Win {
+    height: 30px;
+    font-size: x-large;
+    color: #e7076d;;
+    padding-right: 180px;
+    margin-top: 10px;
+} 
+    
+.status.Draw{
+    height: 30px;
+    font-size: x-large;
+    color: #69399d;
+    padding-right: 225px;
+    margin-top: 10px;
+} 
+
+.status.Active{
+    height: 30px;
+    font-size: x-large;
+    color: #39459d;
+    padding-right: 185px;
+    margin-top: 10px;
+}

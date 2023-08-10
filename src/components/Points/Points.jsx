@@ -1,6 +1,10 @@
 import "./Points.css";
+import { useContext } from "react";
+import { AppContext } from "../../contexts/AppContext";
 
-export default function Points({ countX, countO }) {
+export default function Points({}) {
+  const { pointsO, pointsX } = useContext(AppContext);
+
   return (
     <div className="points">
       <table>
@@ -10,8 +14,8 @@ export default function Points({ countX, countO }) {
           <th> O </th>
         </tr>
         <tr className="table-body">
-          <td>{countX}</td>
-          <td>{countO}</td>
+          <td>{pointsX}</td>
+          <td>{pointsO}</td>
         </tr>
       </table>
     </div>

@@ -1,26 +1,13 @@
-import { useContext } from "react";
-import { AppContext } from "../../contexts/AppContext";
-import { STATUSES } from "../../enums";
+import "./Cell.css";
 
-export default function Cell({ row, column, value }) {
-  const { cells, setCells, currentPlayer, setCurrentPlayer, gameStatus } =
-    useContext(AppContext);
-
+export default function Cell({ row, column, value, onClick }) {
   const handleClick = () => {
-    if (gameStatus !== STATUSES["ACTIVE"]) return;
-
-    if (typeof cells[row][column] === "string") return;
-
-    setCells((previousState) => {
-      return [...previousState, (previousState[row][column] = currentPlayer)];
-    });
-
-    setCurrentPlayer(currentPlayer === "X" ? "O" : "X");
+    onClick(row, column);
   };
 
   return (
     <div className="cell" onClick={handleClick}>
-      {cells[row][column]}
+      {value}
     </div>
   );
 }

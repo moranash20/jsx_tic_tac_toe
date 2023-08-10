@@ -1,0 +1,11 @@
+.reset {
+    background-color: rgb(212 221 220 / 87%);
+    border: groove;
+    margin-right: 180px;
+    margin-top: 20px;
+    border-radius: 50px;
+}
+
+.reset:hover{
+  background-color: aliceblue;
+}
